@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 
+def vCode = 1
+def vName = '0.1.0'
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
@@ -7,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode vCode
+        versionName vName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -23,9 +26,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile 'com.android.support:appcompat-v7:26.+'
-    testCompile 'junit:junit:4.12'
 }
+
+ext {
+    publishArtifact = 'ratioview'
+    publishVersion = vName // 发布到Jcenter的版本号
+    publishDesc = '实现固定宽高比的控件'
+    publishWebsite = 'https://github.com/a-liYa/RatioView'
+}
+
+apply from: "${rootDir}/publish.gradle"
