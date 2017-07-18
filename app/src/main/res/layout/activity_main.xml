@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.aliya.view.ratio.RatioRelativeLayout
+        android:id="@+id/ratio_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:background="@color/colorAccent"
+        app:ratio_w2h="1:1">
+
+    </com.aliya.view.ratio.RatioRelativeLayout>
+
+    <com.aliya.view.ratio.RatioFrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@color/colorAccent"
+        app:ratio_w2h="1:1">
+
+    </com.aliya.view.ratio.RatioFrameLayout>
+
+    <Button
+        android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:layout_gravity="bottom|center_horizontal" />
 
 </FrameLayout>
