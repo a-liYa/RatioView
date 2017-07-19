@@ -59,4 +59,9 @@ public class RatioFrameLayout extends FrameLayout {
         return helper.getRatio();
     }
 
+    public void clearRatio() {
+        helper.setRatio(RatioHelper.NO_VALUE);
+        requestLayout();
+    }
+
 }

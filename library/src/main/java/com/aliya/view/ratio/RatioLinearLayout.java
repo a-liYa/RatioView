@@ -59,4 +59,9 @@ public class RatioLinearLayout extends LinearLayout {
         return helper.getRatio();
     }
 
+    public void clearRatio() {
+        helper.setRatio(RatioHelper.NO_VALUE);
+        requestLayout();
+    }
+
 }

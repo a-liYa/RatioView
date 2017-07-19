@@ -59,4 +59,9 @@ public class RatioRelativeLayout extends RelativeLayout {
         return helper.getRatio();
     }
 
+    public void clearRatio() {
+        helper.setRatio(RatioHelper.NO_VALUE);
+        requestLayout();
+    }
+
 }
