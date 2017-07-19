@@ -4,7 +4,7 @@
 #### 依赖
 
 ```
-compile 'com.aliya:ratioview:0.1.1'
+compile 'com.aliya:ratioview:0.1.2'
 compile 'com.android.support:appcompat-v7:x.x.x' // 包含v7包
 ```
 
