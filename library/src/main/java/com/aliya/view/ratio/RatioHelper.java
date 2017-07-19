@@ -15,7 +15,7 @@ import android.view.View.MeasureSpec;
  * @author a_liYa
  * @date 2017/7/18 23:00.
  */
-class RatioHelper {
+public class RatioHelper {
 
     private float ratio_w2h = -1;
 
