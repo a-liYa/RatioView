@@ -36,11 +36,10 @@ public class RatioLinearLayout extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-        widthMeasureSpec = helper.widthMeasureSpec(widthMeasureSpec, heightMeasureSpec);
-        heightMeasureSpec = helper.heightMeasureSpec(widthMeasureSpec, heightMeasureSpec);
-
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(
+                helper.widthMeasureSpec(widthMeasureSpec, heightMeasureSpec, getLayoutParams()),
+                helper.heightMeasureSpec(widthMeasureSpec, heightMeasureSpec, getLayoutParams())
+        );
     }
 
     /**

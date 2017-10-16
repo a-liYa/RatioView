@@ -8,6 +8,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.MeasureSpec;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 宽高比 - 助手
@@ -50,14 +54,16 @@ public class RatioHelper {
         return this;
     }
 
-    public int widthMeasureSpec(int widthMeasureSpec, int heightMeasureSpec) {
+    public int widthMeasureSpec(int widthMeasureSpec, int heightMeasureSpec,
+                                LayoutParams params) {
         if (ratio_w2h > 0) {
             int wMode = MeasureSpec.getMode(widthMeasureSpec);
             int hMode = MeasureSpec.getMode(heightMeasureSpec);
 
             int hSize = MeasureSpec.getSize(heightMeasureSpec);
 
-            if (wMode != MeasureSpec.EXACTLY && hMode == MeasureSpec.EXACTLY) {
+            if (wMode != MeasureSpec.EXACTLY && hMode == MeasureSpec.EXACTLY ||
+                    params.width == WRAP_CONTENT && params.height != WRAP_CONTENT) {
                 widthMeasureSpec = MeasureSpec
                         .makeMeasureSpec(Math.round(hSize * ratio_w2h), View.MeasureSpec.EXACTLY);
             }
@@ -65,14 +71,16 @@ public class RatioHelper {
         return widthMeasureSpec;
     }
 
-    public int heightMeasureSpec(int widthMeasureSpec, int heightMeasureSpec) {
+    public int heightMeasureSpec(int widthMeasureSpec, int heightMeasureSpec,
+                                 LayoutParams params) {
         if (ratio_w2h > 0) {
             int wMode = MeasureSpec.getMode(widthMeasureSpec);
             int hMode = MeasureSpec.getMode(heightMeasureSpec);
 
             int wSize = MeasureSpec.getSize(widthMeasureSpec);
 
-            if (wMode == MeasureSpec.EXACTLY && hMode != MeasureSpec.EXACTLY) {
+            if (wMode == MeasureSpec.EXACTLY && hMode != MeasureSpec.EXACTLY
+                    || params.width != WRAP_CONTENT && params.height == WRAP_CONTENT) {
                 heightMeasureSpec = MeasureSpec
                         .makeMeasureSpec(Math.round(wSize / ratio_w2h), MeasureSpec.EXACTLY);
             }
