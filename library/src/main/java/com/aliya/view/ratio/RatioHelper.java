@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.MeasureSpec;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
