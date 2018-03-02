@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
  * <p>
  * eg：布局添加属性 <code>app:ratio_w2h="1280:720"</code>
  * 表示：宽／高 = 1280／720
+ * </p>
  *
  * @author a_liYa
  * @date 2017/7/18 下午11:50.
