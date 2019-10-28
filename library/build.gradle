@@ -1,16 +1,18 @@
 apply plugin: 'com.android.library'
 
-def vCode = 100
-def vName = '1.0.0'
+ext {
+    version_code = 100
+    version_name = '1.0.0'
+}
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
-        versionCode vCode
-        versionName vName
+        targetSdkVersion 28
+        versionCode version_code
+        versionName version_name
 
     }
     buildTypes {
@@ -22,15 +24,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided 'com.android.support:appcompat-v7:26.1.0'
-}
-
-ext {
-    publishArtifact = 'ratioview'
-    publishVersion = vName // 发布到Jcenter的版本号
-    publishDesc = '实现固定宽高比的控件'
-    publishWebsite = 'https://github.com/a-liYa/RatioView'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly 'com.android.support:appcompat-v7:28.0.0'
 }
 
 apply from: "${rootDir}/publish.gradle"
