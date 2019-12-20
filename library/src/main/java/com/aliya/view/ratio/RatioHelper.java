@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup.LayoutParams;
 
@@ -14,6 +13,9 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * 宽高比 - 助手
+ * 规则：
+ * 1. 根据精确的宽/高 结合比例计算 高/宽；
+ * 2. 如果宽和高均为精确值，以最大不超出原则重新计算宽或高。
  *
  * @author a_liYa
  * @date 2017/7/18 23:00.
@@ -28,8 +30,9 @@ public class RatioHelper {
     public RatioHelper(@NonNull Context context, @Nullable AttributeSet attrs) {
         if (attrs == null) return;
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RatioLayout);
-        String w_h = ta.getString(R.styleable.RatioLayout_ratio_w2h);
+        TypedArray ta = context.obtainStyledAttributes(attrs,
+                com.aliya.view.ratio.R.styleable.RatioLayout);
+        String w_h = ta.getString(com.aliya.view.ratio.R.styleable.RatioLayout_ratio_w2h);
         if (!TextUtils.isEmpty(w_h) && w_h.contains(RATIO_SYMBOL)) {
             String[] split = w_h.trim().split(RATIO_SYMBOL);
             if (split != null && split.length == 2) {
@@ -53,37 +56,34 @@ public class RatioHelper {
         return this;
     }
 
-    public int widthMeasureSpec(int widthMeasureSpec, int heightMeasureSpec,
-                                LayoutParams params) {
+    public int[] measureSpec(int[] measureSpecs, LayoutParams params) {
         if (ratio_w2h > 0) {
-            int wMode = MeasureSpec.getMode(widthMeasureSpec);
-            int hMode = MeasureSpec.getMode(heightMeasureSpec);
+            int wMode = MeasureSpec.getMode(measureSpecs[0]);
+            int hMode = MeasureSpec.getMode(measureSpecs[1]);
 
-            int hSize = MeasureSpec.getSize(heightMeasureSpec);
+            int wSize = MeasureSpec.getSize(measureSpecs[0]);
+            int hSize = MeasureSpec.getSize(measureSpecs[1]);
 
-            if (wMode != MeasureSpec.EXACTLY && hMode == MeasureSpec.EXACTLY ||
-                    params.width == WRAP_CONTENT && params.height != WRAP_CONTENT) {
-                widthMeasureSpec = MeasureSpec
-                        .makeMeasureSpec(Math.round(hSize * ratio_w2h), View.MeasureSpec.EXACTLY);
-            }
-        }
-        return widthMeasureSpec;
-    }
-
-    public int heightMeasureSpec(int widthMeasureSpec, int heightMeasureSpec,
-                                 LayoutParams params) {
-        if (ratio_w2h > 0) {
-            int wMode = MeasureSpec.getMode(widthMeasureSpec);
-            int hMode = MeasureSpec.getMode(heightMeasureSpec);
-
-            int wSize = MeasureSpec.getSize(widthMeasureSpec);
-
-            if (wMode == MeasureSpec.EXACTLY && hMode != MeasureSpec.EXACTLY
-                    || params.width != WRAP_CONTENT && params.height == WRAP_CONTENT) {
-                heightMeasureSpec = MeasureSpec
+            if ((wMode != MeasureSpec.EXACTLY && hMode == MeasureSpec.EXACTLY) ||
+                    (params.width == WRAP_CONTENT && params.height != WRAP_CONTENT)) {
+                measureSpecs[0] = MeasureSpec
+                        .makeMeasureSpec(Math.round(hSize * ratio_w2h), MeasureSpec.EXACTLY);
+            } else if ((wMode == MeasureSpec.EXACTLY && hMode != MeasureSpec.EXACTLY) ||
+                    (params.width != WRAP_CONTENT && params.height == WRAP_CONTENT)) {
+                measureSpecs[1] = MeasureSpec
                         .makeMeasureSpec(Math.round(wSize / ratio_w2h), MeasureSpec.EXACTLY);
+            } else if ((wMode == MeasureSpec.EXACTLY && hMode == MeasureSpec.EXACTLY) ||
+                    (params.width != WRAP_CONTENT && params.height != WRAP_CONTENT)) {
+                int _wSize = Math.round(hSize * ratio_w2h);
+                if (_wSize <= wSize) {
+                    measureSpecs[0] = MeasureSpec
+                            .makeMeasureSpec(_wSize, MeasureSpec.EXACTLY);
+                } else {
+                    measureSpecs[1] = MeasureSpec
+                            .makeMeasureSpec(Math.round(wSize / ratio_w2h), MeasureSpec.EXACTLY);
+                }
             }
         }
-        return heightMeasureSpec;
+        return measureSpecs;
     }
 }
