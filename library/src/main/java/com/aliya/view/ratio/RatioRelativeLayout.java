@@ -37,10 +37,9 @@ public class RatioRelativeLayout extends RelativeLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(
-                helper.widthMeasureSpec(widthMeasureSpec, heightMeasureSpec, getLayoutParams()),
-                helper.heightMeasureSpec(widthMeasureSpec, heightMeasureSpec, getLayoutParams())
-        );
+        int[] measureSpecs = helper.measureSpec(
+                new int[]{widthMeasureSpec, heightMeasureSpec}, getLayoutParams());
+        super.onMeasure(measureSpecs[0], measureSpecs[1]);
     }
 
     /**
@@ -63,5 +62,4 @@ public class RatioRelativeLayout extends RelativeLayout {
         helper.setRatio(RatioHelper.NO_VALUE);
         requestLayout();
     }
-
 }
