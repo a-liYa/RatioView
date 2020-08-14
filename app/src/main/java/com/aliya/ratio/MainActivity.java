@@ -1,10 +1,9 @@
 package com.aliya.ratio;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.aliya.view.ratio.RatioLinearLayout;
 import com.aliya.view.ratio.RatioRelativeLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
